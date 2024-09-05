@@ -1,3 +1,4 @@
+import os
 import gradio as gr
 from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
@@ -22,12 +23,22 @@ def get_device():
 
 device = get_device()
 
+def get_model_path():
+    local_model_path = os.path.join("model", "Qwen2-VL-7B-Instruct")
+    if os.path.exists(local_model_path):
+        logger.info(f"使用本地模型: {local_model_path}")
+        return local_model_path
+    else:
+        logger.info("本地模型不存在，使用Hugging Face模型")
+        return "Qwen/Qwen2-VL-7B-Instruct"
+
 try:
     logger.info("开始加载模型和处理器")
+    model_path = get_model_path()
     model = Qwen2VLForConditionalGeneration.from_pretrained(
-        "./Qwen2-VL-7B-Instruct", torch_dtype="auto", device_map="auto"
+        model_path, torch_dtype="auto", device_map="auto"
     )
-    processor = AutoProcessor.from_pretrained("./Qwen2-VL-7B-Instruct")
+    processor = AutoProcessor.from_pretrained(model_path)
     logger.info("模型和处理器加载完成")
 except Exception as e:
     logger.error(f"模型加载失败: {e}")
