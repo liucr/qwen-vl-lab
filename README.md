@@ -47,7 +47,7 @@
 1. 运行应用：
 
    ```
-   python app.py
+   python inference.py
    ```
 
 2. 在浏览器中打开显示的本地 URL（通常是 `http://127.0.0.1:7860`）。
