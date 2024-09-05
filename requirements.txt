@@ -1,0 +1,6 @@
+transformers @ git+https://github.com/huggingface/transformers@47b096412da9cbeb9351806e9f0eb70a693b2859
+qwen_vl_utils
+torch==2.4.1
+torchvision==0.19.1
+gradio==4.42.0
+av
